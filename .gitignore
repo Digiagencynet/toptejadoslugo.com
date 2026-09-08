@@ -24,3 +24,6 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# cloudflare / wrangler local state (miniflare cache — never commit)
+.wrangler/
