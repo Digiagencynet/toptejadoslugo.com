@@ -175,12 +175,19 @@ export async function getMenu() {
     `populate[navLinks][populate][dropdown][populate]=*`,
   ].join('&')
 
-  // Sites without projects shouldn't show the Proyectos nav item
-  const [menuData, projectsProbe] = await Promise.all([
+  // Sites without projects shouldn't show the Proyectos nav item, and the same
+  // holds for Blog: a site with no posts served a listing that fell back to the
+  // six seed articles in data/blogPage.json, so deleting the last post in Strapi
+  // published fake content instead of emptying the page.
+  const [menuData, projectsProbe, blogsProbe] = await Promise.all([
     strapiGet(`menus?${params}`),
     strapiGet(`projects?filters[site][$eq]=${SITE_SLUG}&fields[0]=id&pagination[pageSize]=1`),
+    strapiGet(`blogs?filters[site][$eq]=${SITE_SLUG}&fields[0]=id&pagination[pageSize]=1`),
   ])
   const hasProjects = Array.isArray(projectsProbe) && projectsProbe.length > 0
+  // A failed probe yields null, not [] - treat that as "no blogs" so an
+  // unreachable Strapi hides the link rather than linking to an empty page.
+  const hasBlogs = Array.isArray(blogsProbe) && blogsProbe.length > 0
 
   const menu = menuData?.[0]
   if (!menu) return null
@@ -194,7 +201,10 @@ export async function getMenu() {
         alt: menu.logoAlt || menu.logo?.alternativeText || '',
       }
       : null,
-    navLinks: (menu.navLinks ?? []).filter(link => hasProjects || link.href !== '/proyectos').map(link => {
+    navLinks: (menu.navLinks ?? [])
+      .filter(link => hasProjects || link.href !== '/proyectos')
+      .filter(link => hasBlogs || link.href !== '/blog')
+      .map(link => {
       const columns = (link.columns ?? []).map(col => ({
         title: col.title,
         items: (col.items ?? []).map(item => ({

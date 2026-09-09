@@ -552,6 +552,27 @@ function BlogListing({ posts, onSelectPost }) {
           </p>
         </div>
 
+        {/* Nothing published yet. The Blog nav link is hidden in this case
+            (see getMenu in lib/strapi.js), so this is only reached by a direct
+            visit or a stale link - say so plainly rather than showing chrome
+            around an empty grid. */}
+        {postsToShow.length === 0 && (
+          <div style={{
+            background: '#fff',
+            border: '1px solid #e2e8f0',
+            borderRadius: 16,
+            padding: '56px 24px',
+            textAlign: 'center'
+          }}>
+            <p style={{ color: '#0f172a', fontSize: 18, fontWeight: 600, margin: 0 }}>
+              {blogPageData.ui.emptyTitle}
+            </p>
+            <p style={{ color: '#64748b', fontSize: 15, marginTop: 8, marginBottom: 0 }}>
+              {blogPageData.ui.emptyText}
+            </p>
+          </div>
+        )}
+
         {/* Featured first post */}
         {postsToShow.length > 0 && (() => {
           const featured = postsToShow[0]
@@ -757,7 +778,12 @@ function BlogListing({ posts, onSelectPost }) {
 // MAIN EXPORT
 // ─────────────────────────────────────────────────────────────
 export default function BlogContent({ posts, initialSlug }) {
-  const blogPosts = (posts && posts.length > 0) ? posts : blogPageData.posts;
+  // Never fall back to seeded articles. This used to read
+  //   (posts && posts.length > 0) ? posts : blogPageData.posts
+  // so a site whose last post was deleted in Strapi - or whose Strapi was simply
+  // unreachable - silently published six demo articles, identical across every
+  // site cloned from this template, each on a real indexable URL.
+  const blogPosts = posts ?? [];
 
   // Resolve the initial post synchronously so SSR + first paint show the
   // right article (no listing flash with another post's image).
