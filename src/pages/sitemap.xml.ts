@@ -117,7 +117,7 @@ export const GET: APIRoute = async ({ site, url }) => {
   // This endpoint issues 20 Strapi queries per hit (one per service collection
   // plus the shared ones) and its content changes only when the CMS does, so it
   // is exactly the kind of response the CDN should be answering.
-  return new Response(buildSitemap(uniqueEntries), {
+  return new Response(buildSitemap(uniqueUrls), {
     headers: {
       'Content-Type': 'application/xml; charset=utf-8',
       'Cache-Control': 'public, max-age=300, s-maxage=3600, stale-while-revalidate=86400',

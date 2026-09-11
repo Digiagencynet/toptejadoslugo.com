@@ -1,7 +1,32 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import blogPageData from '../data/blogPage.json'
 import { initialsAvatar } from './HomeContent.jsx'
 import { optimizedImageUrl } from '../lib/site.js'
+import { renderBlocks, headingsOf, slugifyHeading } from '../lib/blocks.jsx'
+
+// Tailwind classes matching this page's existing inline-styled article body
+// typography (font-size 15.5/#374151/line-height 1.8), used by the Blocks
+// renderer so `content` articles look consistent with the legacy `sections`
+// path below.
+const ARTICLE_CLASSES = {
+  paragraph: 'text-[15.5px] text-[#374151] leading-[1.8] mb-3',
+  heading: 'text-[20px] font-bold text-[#0f172a] mb-3 leading-[1.3]',
+  list: 'mb-3 pl-6 text-[15.5px] text-[#374151] leading-[1.8]',
+  quote: 'border-l-4 border-[#e5421d] pl-4 italic text-[#374151] my-4',
+  link: 'text-[#e5421d] underline hover:no-underline',
+}
+
+// Anchor ids for the sticky TOC must be unique and stable across re-renders —
+// build them once from a post's heading text, disambiguating repeats.
+function buildHeadingIds(content) {
+  const seen = new Map()
+  return headingsOf(content).map(text => {
+    const base = slugifyHeading(text)
+    const n = (seen.get(base) ?? 0) + 1
+    seen.set(base, n)
+    return n === 1 ? base : `${base}-${n}`
+  })
+}
 
 // ─────────────────────────────────────────────────────────────
 // RICH BLOG DATA (passed dynamically via props, falls back to JSON)
@@ -229,12 +254,23 @@ function TableOfContents({ sections, activeId }) {
 // BLOG DETAIL VIEW
 // ─────────────────────────────────────────────────────────────
 function BlogDetail({ post, onBack }) {
-  const [activeId, setActiveId] = useState(post.sections[0]?.id || '')
+  // New posts write `content` (Strapi Blocks, WordPress-like editor); old
+  // un-migrated posts have no content and fall back to the legacy `sections`
+  // rendering below — nothing published under the old flow breaks.
+  const usingContent = Array.isArray(post.content) && post.content.length > 0
+  const headingIds = useMemo(() => (usingContent ? buildHeadingIds(post.content) : []), [post, usingContent])
+  const tocSections = useMemo(() => (
+    usingContent
+      ? headingsOf(post.content).map((heading, i) => ({ id: headingIds[i], heading }))
+      : post.sections
+  ), [post, usingContent, headingIds])
+
+  const [activeId, setActiveId] = useState(tocSections[0]?.id || '')
   const [shareHover, setShareHover] = useState(null)
   const sectionRefs = useRef({})
 
   useEffect(() => {
-    const observers = post.sections.map(s => {
+    const observers = tocSections.map(s => {
       const el = document.getElementById(s.id)
       if (!el) return null
       const obs = new IntersectionObserver(
@@ -314,6 +350,25 @@ function BlogDetail({ post, onBack }) {
             }}>
               {post.category}
             </span>
+          )}
+
+          {/* Tags */}
+          {post.tags && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 16 }}>
+              {post.tags.split(',').map(t => t.trim()).filter(Boolean).map((tag, i) => (
+                <span key={i} style={{
+                  display: 'inline-block',
+                  background: '#f1f5f9',
+                  color: '#475569',
+                  fontSize: 11,
+                  fontWeight: 500,
+                  padding: '3px 9px',
+                  borderRadius: 999
+                }}>
+                  #{tag}
+                </span>
+              ))}
+            </div>
           )}
 
           {/* Title */}
@@ -398,12 +453,17 @@ function BlogDetail({ post, onBack }) {
 
         {/* LEFT: Sidebar (sticky TOC) */}
         <aside className="blog-sidebar">
-          <TableOfContents sections={post.sections} activeId={activeId} />
+          <TableOfContents sections={tocSections} activeId={activeId} />
         </aside>
 
         {/* RIGHT: Article body */}
         <article style={{ minWidth: 0 }}>
-          {post.sections.map((section, i) => (
+          {usingContent ? (
+            renderBlocks(post.content, {
+              classNames: ARTICLE_CLASSES,
+              headingId: (_text, i) => headingIds[i],
+            })
+          ) : post.sections.map((section, i) => (
             <div key={section.id}>
               <div
                 id={section.id}
