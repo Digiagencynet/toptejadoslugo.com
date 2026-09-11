@@ -610,6 +610,8 @@ export async function getBlogs() {
       coverImg,
       coverImgWidth,
       coverImgHeight,
+      content: post.content ?? [],
+      tags: post.tags ?? null,
       sections,
       inlineImage,
       site: post.site,

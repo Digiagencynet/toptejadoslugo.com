@@ -1,57 +1,6 @@
-function renderBlocks(blocks) {
-  return blocks.map((block, i) => {
-    if (block.type === 'paragraph') {
-      return (
-        <p key={i} className="text-[15px] text-slate-600 leading-relaxed mb-5">
-          {(block.children ?? []).map((c, j) => renderInline(c, j))}
-        </p>
-      )
-    }
-    if (block.type === 'heading') {
-      const Tag = `h${block.level ?? 2}`
-      return (
-        <Tag key={i} className="text-[24px] font-semibold text-[#0E0C29] mt-10 mb-4">
-          {(block.children ?? []).map((c, j) => renderInline(c, j))}
-        </Tag>
-      )
-    }
-    if (block.type === 'list') {
-      const Tag = block.format === 'ordered' ? 'ol' : 'ul'
-      return (
-        <Tag key={i} className={`mb-5 pl-6 text-[15px] text-slate-600 leading-relaxed ${block.format === 'ordered' ? 'list-decimal' : 'list-disc'}`}>
-          {(block.children ?? []).map((item, j) => (
-            <li key={j} className="mb-2">
-              {(item.children ?? []).map((c, k) => renderInline(c, k))}
-            </li>
-          ))}
-        </Tag>
-      )
-    }
-    if (block.type === 'quote') {
-      return (
-        <blockquote key={i} className="border-l-4 border-brand-blue pl-4 italic text-slate-600 my-5">
-          {(block.children ?? []).map((c, j) => renderInline(c, j))}
-        </blockquote>
-      )
-    }
-    return null
-  })
-}
+import { renderBlocks } from '../lib/blocks.jsx'
 
-function renderInline(node, key) {
-  if (node.type === 'link') {
-    return (
-      <a key={key} href={node.url} className="text-brand-blue underline hover:no-underline">
-        {(node.children ?? []).map((c, j) => renderInline(c, j))}
-      </a>
-    )
-  }
-  let text = node.text ?? ''
-  if (node.bold) text = <strong>{text}</strong>
-  if (node.italic) text = <em>{text}</em>
-  if (node.underline) text = <u>{text}</u>
-  return <span key={key}>{text}</span>
-}
+const LEGAL_CLASSES = { heading: 'text-[24px] font-semibold text-[#0E0C29] mt-10 mb-4' }
 
 export default function LegalContent({ data }) {
   if (!data) {
@@ -81,7 +30,7 @@ export default function LegalContent({ data }) {
           </p>
         )}
         <div className="legal-body">
-          {isBlocks && renderBlocks(body)}
+          {isBlocks && renderBlocks(body, { classNames: LEGAL_CLASSES })}
           {isString && <div dangerouslySetInnerHTML={{ __html: body }} />}
         </div>
       </div>
