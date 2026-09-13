@@ -258,7 +258,7 @@ export default function ContactPage({ site, strapiUrl, phone, email, waLink, soc
         {/* ── Right: form card ── */}
         <div className="bg-white rounded-[16px] border border-slate-200/70 p-7 md:p-10 shadow-sm">
           {status === 'success' ? (
-            <div className="text-center py-16">
+            <div id="form-success-message" className="text-center py-16">
               <div className="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-5">
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="20 6 9 17 4 12"></polyline>

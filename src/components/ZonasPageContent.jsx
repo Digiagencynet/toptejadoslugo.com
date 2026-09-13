@@ -685,7 +685,7 @@ export default function ZonasPageContent({ site, data, recentProjects = [], home
 
           <div className="w-full md:w-7/12">
             {status === 'success' ? (
-              <div className="bg-white p-8 md:p-10 rounded-[16px] shadow-sm border border-green-100 text-center">
+              <div id="form-success-message" className="bg-white p-8 md:p-10 rounded-[16px] shadow-sm border border-green-100 text-center">
                 <div className="w-16 h-16 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                 </div>
