@@ -219,7 +219,7 @@ export default function ContactPage({ site, strapiUrl, phone, email, waLink, soc
 
           {/* Location card */}
           <div className="bg-white rounded-[16px] border border-slate-200/70 overflow-hidden grid grid-cols-1 sm:grid-cols-2">
-            <div className="p-7 md:p-8">
+            <div data-aut-hero-address-contact data-aut-hero-phone-contact className="p-7 md:p-8">
               <div className="flex items-center gap-2 mb-4">
                 <SpainFlag className="w-[22px] h-[16px] rounded-[2px] shadow-sm shrink-0" />
                 <h2 className="text-[20px] font-semibold text-[#11181C]">{content.location.city}</h2>

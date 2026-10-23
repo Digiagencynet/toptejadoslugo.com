@@ -98,7 +98,7 @@ export default function HomeContent({ site, data, apiUrl, phone, email, waLink, 
   const homeData = data || {};
   const hasContent = data && Object.keys(data).length > 0;
   const sitePhone = phone || '+34 900 000 000'
-  const siteEmail = email || `contacto@tejados${site || 'burgos'}.es`
+  const siteEmail = email || 'toptejados@gmail.com'
   const siteWaLink = `https://api.whatsapp.com/send/?phone=${sitePhone.replace(/[^0-9]/g, '')}&text&type=phone_number&app_absent=0`
 
   const [activeTestimonial, setActiveTestimonial] = useState(0)

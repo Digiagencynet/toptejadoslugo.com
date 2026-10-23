@@ -20,8 +20,8 @@ try {
 
 const site = String(contactData?.site ?? import.meta.env.PUBLIC_SITE_SLUG ?? 'madrid')
 const siteName = formatSiteName(site)
-const phone = contactData?.phone ?? import.meta.env.PUBLIC_PHONE ?? '+34 123 456 789'
-const email = contactData?.email ?? import.meta.env.PUBLIC_EMAIL ?? `contacto@tejados${site}.es`
+const phone = contactData?.phone ?? '+34 123 456 789'
+const email = contactData?.email ?? 'toptejados@gmail.com'
 const waLink = contactData?.waLink
 const socials = contactData?.socials
 ---

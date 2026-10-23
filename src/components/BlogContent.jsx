@@ -614,7 +614,7 @@ function BlogListing({ posts, onSelectPost }) {
 
         {/* Nothing published yet. The Blog nav link is hidden in this case
             (see getMenu in lib/strapi.js), so this is only reached by a direct
-            visit or a stale link - say so plainly rather than showing chrome
+            visit or a stale link — say so plainly rather than showing chrome
             around an empty grid. */}
         {postsToShow.length === 0 && (
           <div style={{
@@ -840,8 +840,8 @@ function BlogListing({ posts, onSelectPost }) {
 export default function BlogContent({ posts, initialSlug }) {
   // Never fall back to seeded articles. This used to read
   //   (posts && posts.length > 0) ? posts : blogPageData.posts
-  // so a site whose last post was deleted in Strapi - or whose Strapi was simply
-  // unreachable - silently published six demo articles, identical across every
+  // so a site whose last post was deleted in Strapi — or whose Strapi was simply
+  // unreachable — silently published six demo articles, identical across every
   // site cloned from this template, each on a real indexable URL.
   const blogPosts = posts ?? [];
 

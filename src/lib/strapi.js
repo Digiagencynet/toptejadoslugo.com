@@ -185,7 +185,7 @@ export async function getMenu() {
     strapiGet(`blogs?filters[site][$eq]=${SITE_SLUG}&fields[0]=id&pagination[pageSize]=1`),
   ])
   const hasProjects = Array.isArray(projectsProbe) && projectsProbe.length > 0
-  // A failed probe yields null, not [] - treat that as "no blogs" so an
+  // A failed probe yields null, not [] — treat that as "no blogs" so an
   // unreachable Strapi hides the link rather than linking to an empty page.
   const hasBlogs = Array.isArray(blogsProbe) && blogsProbe.length > 0
 
