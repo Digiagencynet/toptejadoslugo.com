@@ -54,11 +54,10 @@ const site = siteSlug
   .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
   .join(" ");
 const phone =
-  contactData?.phone ?? import.meta.env.PUBLIC_PHONE ?? "+34 123 456 789";
+  contactData?.phone ?? "+34 123 456 789";
 const email =
   contactData?.email ??
-  import.meta.env.PUBLIC_EMAIL ??
-  `contacto@tejados${siteSlug}.es`;
+  'toptejados@gmail.com';
 const waLink = contactData?.waLink;
 const socials = contactData?.socials;
 

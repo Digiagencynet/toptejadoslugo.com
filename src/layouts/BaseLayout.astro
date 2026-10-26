@@ -74,9 +74,9 @@ if (trackingRes && trackingRes.ok) {
 
 // Fallbacks to environment variables if data is missing or fetch fails
 tracking = {
-  ga4: tracking.ga4 || import.meta.env.PUBLIC_GA4 || '',
-  gtm: tracking.gtm || import.meta.env.PUBLIC_GTM || '',
-  gsc: tracking.gsc || import.meta.env.PUBLIC_GSC || '',
+  ga4: tracking.ga4 || '',
+  gtm: tracking.gtm || '',
+  gsc: tracking.gsc || '',
   microsoftClarity: tracking.microsoftClarity || import.meta.env.PUBLIC_MICROSOFT_CLARITY || '',
   facebookPixel: tracking.facebookPixel || import.meta.env.PUBLIC_FACEBOOK_PIXEL || '',
   ahrefsTag: tracking.ahrefsTag || import.meta.env.PUBLIC_AHREFS_TAG || '',
@@ -87,8 +87,8 @@ tracking = {
   permalink: tracking.permalink || '',
 };
 
-const phone = propPhone || contactInfo?.phone || import.meta.env.PUBLIC_PHONE || '';
-const email = propEmail || contactInfo?.email || import.meta.env.PUBLIC_EMAIL || '';
+const phone = propPhone || contactInfo?.phone || '';
+const email = propEmail || contactInfo?.email || '';
 const waLink = contactInfo?.waLink || `https://api.whatsapp.com/send/?phone=${phone.replace(/[\s+]/g, '')}&text&type=phone_number&app_absent=0`;
 
 const defaultPrimary = site === 'burgos' ? '#0f172a' : '#1e3a8a';
@@ -314,6 +314,7 @@ const semrushScript = tracking.semrushTag ? `
     <!-- WhatsApp Floating Button -->
     <a
       href={waLink}
+      data-aut-whatsapp
       target="_blank"
       rel="noopener noreferrer"
       class="fixed bottom-6 right-6 z-[99] bg-[#25D366] text-white p-3.5 rounded-full shadow-[0_8px_24px_rgba(37,211,102,0.4)] hover:bg-[#20bd5a] hover:scale-110 hover:-translate-y-1 hover:shadow-[0_12px_28px_rgba(37,211,102,0.5)] transition-all duration-300 flex items-center justify-center group"

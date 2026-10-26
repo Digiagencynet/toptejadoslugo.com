@@ -10,7 +10,7 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
   const dropdownRef = useRef(null)
 
   const sitePhone = phone || '+34 900 000 000'
-  const siteEmail = email || `contacto@tejados${site || 'burgos'}.es`
+  const siteEmail = email || 'toptejados@gmail.com'
   const siteWaLink = `https://api.whatsapp.com/send/?phone=${sitePhone.replace(/[^0-9]/g, '')}&text&type=phone_number&app_absent=0`
   const siteSocials = socials || []
 
@@ -92,7 +92,7 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
           }`}
       >
         {/* Logo */}
-        <a href="/" className="flex items-center group cursor-pointer z-50 shrink-0">
+        <a href="/" data-aut-nav-logo className="flex items-center group cursor-pointer z-50 shrink-0">
           <img
             {...responsiveImage(data.logo, LOGO_SIZES)}
             alt={data.logo.alt}
@@ -221,7 +221,7 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
         </div>
 
         {/* CTA */}
-        <div className="hidden md:flex items-center gap-3">
+        <div data-aut-nav-phone className="hidden md:flex items-center gap-3">
           <a
             href={telHref(sitePhone)}
             className="flex items-center justify-center gap-[6px] w-[171px] h-[40px] px-3 py-2 border border-brand-blue rounded-md text-brand-blue text-[14px] font-semibold leading-[1.2] hover:bg-slate-50 transition-all whitespace-nowrap"
