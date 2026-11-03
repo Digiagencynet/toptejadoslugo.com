@@ -92,8 +92,10 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
           }`}
       >
         {/* Logo */}
-        <a href="/" data-aut-nav-logo className="flex items-center group cursor-pointer z-50 shrink-0">
+        <a href="/" className="flex items-center group cursor-pointer z-50 shrink-0">
           <img
+            data-aut-nav-logo
+            data-aut-filename={data.logo.name || undefined}
             {...responsiveImage(data.logo, LOGO_SIZES)}
             alt={data.logo.alt}
             className="w-[85px] md:w-[115px] h-auto object-contain transition-transform group-hover:scale-105"

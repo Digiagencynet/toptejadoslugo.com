@@ -114,8 +114,10 @@ export default function Footer({ site, phone, email, data, contact }) {
         <div data-aut-footer-address className="w-full lg:w-[444px] lg:shrink-0 px-6 md:px-12 lg:pl-[88px] lg:pr-[57px] pt-12 pb-10 lg:pt-[75px] lg:pb-[60px] border-b lg:border-b-0 lg:border-r border-white">
           <div className="flex flex-col gap-6 w-full max-w-[299px]">
             <div className="flex flex-col gap-5">
-              <a href="/" data-aut-footer-logo className="inline-block self-start" aria-label={displayBrand}>
+              <a href="/" className="inline-block self-start" aria-label={displayBrand}>
                 <img
+                  data-aut-footer-logo
+                  data-aut-filename={logo?.name || undefined}
                   {...(logo?.url
                     ? responsiveImage(logo, LOGO_SIZES)
                     : { src: '/assets/logo.webp', width: 200, height: 60 })}
