@@ -275,7 +275,7 @@ const semrushScript = tracking.semrushTag ? `
     </style>
     
     <!-- JSON-LD Structured Data -->
-    <script type="application/ld+json" set:html={JSON.stringify(allSchemas, null, 2)} />
+    <script type="application/ld+json" data-aut-structured-data set:html={JSON.stringify(allSchemas, null, 2)} />
 
     <!-- Tracking: unconditional install so verification tools detect the tag,
          Consent Mode v2 keeps actual data collection gated on user accept -->
