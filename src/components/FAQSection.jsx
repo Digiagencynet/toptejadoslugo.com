@@ -19,7 +19,13 @@ export default function FAQSection({ site: rawSite = '', data }) {
             className="text-[#000000] font-medium text-[32px] leading-[32px]"
             style={{ fontFamily: 'Inter, sans-serif' }}
           >
-            {data.title || `${data.titlePrefix ?? ''} ${site}`.trim()}
+            {data.title || (() => {
+              const prefix = (data.titlePrefix ?? '').trim()
+              // CMS prefix may already end with the city ("... en Puertollano"):
+              // don't append it a second time.
+              const norm = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim()
+              return site && norm(prefix).endsWith(norm(site)) ? prefix : `${prefix} ${site}`.trim()
+            })()}
           </h2>
         </div>
 
