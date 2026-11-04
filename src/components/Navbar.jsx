@@ -94,7 +94,6 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
         {/* Logo */}
         <a href="/" className="flex items-center group cursor-pointer z-50 shrink-0">
           <img
-            data-aut-nav-logo
             data-aut-filename={data.logo.name || undefined}
             {...responsiveImage(data.logo, LOGO_SIZES)}
             alt={data.logo.alt}

@@ -116,7 +116,6 @@ export default function Footer({ site, phone, email, data, contact }) {
             <div className="flex flex-col gap-5">
               <a href="/" className="inline-block self-start" aria-label={displayBrand}>
                 <img
-                  data-aut-footer-logo
                   data-aut-filename={logo?.name || undefined}
                   {...(logo?.url
                     ? responsiveImage(logo, LOGO_SIZES)
