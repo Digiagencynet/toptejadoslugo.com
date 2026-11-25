@@ -94,7 +94,7 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
         {/* Logo */}
         <a href="/" className="flex items-center group cursor-pointer z-50 shrink-0">
           <img
-            data-aut-filename={data.logo.name || undefined}
+            data-aut-nav-logo-filename={data.logo.name || undefined}
             {...responsiveImage(data.logo, LOGO_SIZES)}
             alt={data.logo.alt}
             className="w-[85px] md:w-[115px] h-auto object-contain transition-transform group-hover:scale-105"
@@ -285,7 +285,7 @@ export default function Navbar({ site, phone, email, waLink, socials, data }) {
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 shrink-0">
           <a href="/" className="flex items-center" onClick={() => setMobileMenuOpen(false)}>
             <img
-              data-aut-filename={data.logo.name || undefined}
+              data-aut-nav-logo-filename={data.logo.name || undefined}
               {...responsiveImage(data.logo, LOGO_SIZES)}
               alt={data.logo.alt}
               className="w-[90px] h-auto object-contain"
